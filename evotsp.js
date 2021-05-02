@@ -354,7 +354,34 @@
   // have this done from the previous exercise. Make sure you pass
   // `callback` as the `success` callback function in the Ajax call.
   function getRouteById(routeId, callback) {
-    // FILL THIS IN
+    
+    const routeId = $('#route-ID').val();
+
+        const url = baseUrl + '/routes/' + routeId;
+
+        $('#route-by-id-elements').text('');
+
+        $.ajax(
+            {
+                method: 'GET',
+                url: url,
+                contentType: 'application/json',
+
+                // success: printRouteDetails,
+                success: callback,
+
+                error: function ajaxError(jqXHR, textStatus, errorThrown) {
+                    console.error(
+                        'Error getting the details of the route by ID',
+                        textStatus,
+                        ', Details: ',
+                        errorThrown
+                    );
+                    console.error('Response: ', jqXHR.responseText);
+                    alert('An error occurred when getting the details for the route: \n' + jqXHR.responseText);
+                }
+            }
+        )
   }
 
   // Get city data (names, locations, etc.) from your new Lambda that returns

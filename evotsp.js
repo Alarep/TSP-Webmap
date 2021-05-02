@@ -316,7 +316,7 @@
           error: function ajaxError(jqXHR, textStatus, errorThrown) {
 
               console.error(
-                  'Error when getting the route: ',
+                  'Error when getting the best routes: ',
                   textStatus,
                   ', Details: ',
                   errorThrown
@@ -465,7 +465,14 @@
   // so the array of best routes is pass along through
   // the waterfall in `runGeneration`.
   function displayBestRoutes(bestRoutes, dbp_cb) {
-    // FILL THIS IN
+    
+    bestRoutesList = $('#best-route-list');
+
+    bestRoutesList.append(
+      '<ol> Route $(bestRoutes[0].route) was found containing the ID $(bestRotes[0].routeId) and length $(bestRoutes[0].len) </ol>'
+      );
+
+    dbp_cb(null, bestRoutes)
   }
 
   ////////////////////////////////////////////////////////////

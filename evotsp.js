@@ -298,12 +298,10 @@
   function getBestRoutes(generation, callback) {
     
     const runId = $('#runId-text-field').val();
-    // const getLim = $('#num-best-to-get').val();
-    const parentNum = $('#num-parents').val();
+    const numToReturn = $('#num-parents').val();
     const gen = $('#generation-text-field').val();
 
-    // Need to change numToReturn Field?
-    const url = baseUrl + `/best?runId=${runId}&generation=${gen}&numToReturn=${parentNum}`;
+    const url = baseUrl + `/best?runId=${runId}&generation=${gen}&numToReturn=${numToReturn}`;
 
     $('#best-route-list').text('');
 
@@ -388,7 +386,28 @@
   // that information. Make sure you pass `callback` as the `success` callback
   // function in the Ajax call.
   function fetchCityData(callback) {
-    // FILL THIS IN
+    
+    $.ajax(
+      {
+          method: 'GET',
+          url: url + '/city-data',
+          contentType: 'application/json',
+
+          // success: printRouteDetails,
+          success: callback,
+
+          error: function ajaxError(jqXHR, textStatus, errorThrown) {
+              console.error(
+                  'Error getting city data',
+                  textStatus,
+                  ', Details: ',
+                  errorThrown
+              );
+              console.error('Response: ', jqXHR.responseText);
+              alert('An error occurred when getting the city data: \n' + jqXHR.responseText);
+          }
+      }
+  )
   }
 
   ////////////////////////////////////////////////////////////

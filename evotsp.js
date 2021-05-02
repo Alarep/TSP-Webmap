@@ -1,6 +1,6 @@
 (function evoTSPwrapper($) {
   const baseUrl =
-    "https://nh5gsos957.execute-api.us-east-1.amazonaws.com/prod/";
+    "https://6jj80mdfp2.execute-api.us-east-1.amazonaws.com/prod";
 
   /*
    * This is organized into sections:
@@ -296,7 +296,40 @@
   // ensure that the best routes that you get from the HTTP call will
   // be passed along in the `runGeneration` waterfall. 
   function getBestRoutes(generation, callback) {
-    // FILL THIS IN
+    
+    const runId = $('#runId-text-field').val();
+    // const getLim = $('#num-best-to-get').val();
+    const parentNum = $('#num-parents').val();
+    const gen = $('#generation-text-field').val();
+
+    // Need to change numToReturn Field?
+    const url = baseUrl + `/best?runId=${runId}&generation=${gen}&numToReturn=${parentNum}`;
+
+    $('#best-route-list').text('');
+
+    $.ajax(
+      {
+          method: 'GET',
+          url: url,
+          contentType: 'application/json', // Declaring the type sent to the db
+
+          success: (bestRoutes) => callback(null, bestRoutes),
+
+          error: function ajaxError(jqXHR, textStatus, errorThrown) {
+
+              console.error(
+                  'Error when getting the route: ',
+                  textStatus,
+                  ', Details: ',
+                  errorThrown
+              );
+
+              console.error('Response: ', jqXHR.responseText);
+
+              alert('An error occurred when getting the details for the routes: \n' + jqXHR.responseText);
+          }
+      }
+  )
   }
 
   // Create the specified number of children by mutating the given

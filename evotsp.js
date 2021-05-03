@@ -471,14 +471,14 @@
   // the waterfall in `runGeneration`.
   function displayBestRoutes(bestRoutes, dbp_cb) {
     
-    // bestRoutesList = $('#best-route-list');
+    bestRoutesList = $('#best-route-list');
 
-    // // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
-    // bestRoutesList.append(
-    //   '<ol> Route $(bestRoutes[0].route) was found containing the ID $(bestRotes[0].routeId) and length $(bestRoutes[0].len) </ol>'
-    //   );
+    // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
+    bestRoutesList.append(
+      '<ol> Route $(bestRoutes[0].route) was found containing the ID $(bestRotes[0].routeId) and length $(bestRoutes[0].len) </ol>'
+      );
 
-    // dbp_cb(null, bestRoutes)
+    dbp_cb(null, bestRoutes)
   }
 
   ////////////////////////////////////////////////////////////

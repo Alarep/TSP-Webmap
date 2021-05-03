@@ -297,37 +297,37 @@
   // be passed along in the `runGeneration` waterfall. 
   function getBestRoutes(generation, callback) {
     
-  //   const runId = $('#runId-text-field').val();
-  //   const numToReturn = $('#num-parents').val();
-  //   const gen = $('#generation-text-field').val();
+    const runId = $('#runId-text-field').val();
+    const numToReturn = $('#num-parents').val();
+    const gen = $('#generation-text-field').val();
 
-  //   const url = baseUrl + `/best?runId=${runId}&generation=${gen}&numToReturn=${numToReturn}`;
+    const url = baseUrl + `/best?runId=${runId}&generation=${gen}&numToReturn=${numToReturn}`;
 
-  //   $('#best-route-list').text('');
+    $('#best-route-list').text('');
 
-  //   $.ajax(
-  //     {
-  //         method: 'GET',
-  //         url: url,
-  //         contentType: 'application/json', // Declaring the type sent to the db
+    $.ajax(
+      {
+          method: 'GET',
+          url: url,
+          contentType: 'application/json', // Declaring the type sent to the db
 
-  //         success: (bestRoutes) => callback(null, bestRoutes),
+          success: (bestRoutes) => callback(null, bestRoutes),
 
-  //         error: function ajaxError(jqXHR, textStatus, errorThrown) {
+          error: function ajaxError(jqXHR, textStatus, errorThrown) {
 
-  //             console.error(
-  //                 'Error when getting the best routes: ',
-  //                 textStatus,
-  //                 ', Details: ',
-  //                 errorThrown
-  //             );
+              console.error(
+                  'Error when getting the best routes: ',
+                  textStatus,
+                  ', Details: ',
+                  errorThrown
+              );
 
-  //             console.error('Response: ', jqXHR.responseText);
+              console.error('Response: ', jqXHR.responseText);
 
-  //             alert('An error occurred when getting the details for the routes: \n' + jqXHR.responseText);
-  //         }
-  //     }
-  // )
+              alert('An error occurred when getting the details for the routes: \n' + jqXHR.responseText);
+          }
+      }
+  )
   }
 
   // Create the specified number of children by mutating the given
@@ -353,33 +353,33 @@
   // `callback` as the `success` callback function in the Ajax call.
   function getRouteById(routeId, callback) {
     
-    // const routeId = $('#route-ID').val();
+    const routeId = $('#route-ID').val();
 
-    //     const url = baseUrl + '/routes/' + routeId;
+        const url = baseUrl + '/routes/' + routeId;
 
-    //     $('#route-by-id-elements').text('');
+        $('#route-by-id-elements').text('');
 
-    //     $.ajax(
-    //         {
-    //             method: 'GET',
-    //             url: url,
-    //             contentType: 'application/json',
+        $.ajax(
+            {
+                method: 'GET',
+                url: url,
+                contentType: 'application/json',
 
-    //             // success: printRouteDetails,
-    //             success: callback,
+                // success: printRouteDetails,
+                success: callback,
 
-    //             error: function ajaxError(jqXHR, textStatus, errorThrown) {
-    //                 console.error(
-    //                     'Error getting the details of the route by ID',
-    //                     textStatus,
-    //                     ', Details: ',
-    //                     errorThrown
-    //                 );
-    //                 console.error('Response: ', jqXHR.responseText);
-    //                 alert('An error occurred when getting the details for the route: \n' + jqXHR.responseText);
-    //             }
-    //         }
-    //     )
+                error: function ajaxError(jqXHR, textStatus, errorThrown) {
+                    console.error(
+                        'Error getting the details of the route by ID',
+                        textStatus,
+                        ', Details: ',
+                        errorThrown
+                    );
+                    console.error('Response: ', jqXHR.responseText);
+                    alert('An error occurred when getting the details for the route: \n' + jqXHR.responseText);
+                }
+            }
+        )
   }
 
   // Get city data (names, locations, etc.) from your new Lambda that returns
@@ -387,27 +387,27 @@
   // function in the Ajax call.
   function fetchCityData(callback) {
     
-  //   $.ajax(
-  //     {
-  //         method: 'GET',
-  //         url: url + '/city-data',
-  //         contentType: 'application/json',
+    $.ajax(
+      {
+          method: 'GET',
+          url: url + '/city-data',
+          contentType: 'application/json',
 
-  //         // success: printRouteDetails,
-  //         success: callback,
+          // success: printRouteDetails,
+          success: callback,
 
-  //         error: function ajaxError(jqXHR, textStatus, errorThrown) {
-  //             console.error(
-  //                 'Error getting city data',
-  //                 textStatus,
-  //                 ', Details: ',
-  //                 errorThrown
-  //             );
-  //             console.error('Response: ', jqXHR.responseText);
-  //             alert('An error occurred when getting the city data: \n' + jqXHR.responseText);
-  //         }
-  //     }
-  // )
+          error: function ajaxError(jqXHR, textStatus, errorThrown) {
+              console.error(
+                  'Error getting city data',
+                  textStatus,
+                  ', Details: ',
+                  errorThrown
+              );
+              console.error('Response: ', jqXHR.responseText);
+              alert('An error occurred when getting the city data: \n' + jqXHR.responseText);
+          }
+      }
+  )
   }
 
   ////////////////////////////////////////////////////////////

@@ -121,48 +121,48 @@
 
   function randomRoute(runId, generation, cb) {
     
-    $.ajax({
-      method: 'POST',
-      url: baseUrl + '/routes',
-      data: JSON.stringify({
-          runId: runId,
-          generation: generation,
-          lengthStoreThreshold: lengthStoreThreshold,
-      }),
-      contentType: 'application/json',
-      // When a request completes, call `showRoute()` to display the
-      // route on the web page.
-      success: displayRoute,
-      error: function ajaxError(jqXHR, textStatus, errorThrown) {
-          console.error(
-              'Error generating random route: ',
-              textStatus,
-              ', Details: ',
-              errorThrown);
-          console.error('Response: ', jqXHR.responseText);
-          alert('An error occurred when creating a random route:\n' + jqXHR.responseText);
-      }
-  })
+  //   $.ajax({
+  //     method: 'POST',
+  //     url: baseUrl + '/routes',
+  //     data: JSON.stringify({
+  //         runId: runId,
+  //         generation: generation,
+  //         lengthStoreThreshold: lengthStoreThreshold,
+  //     }),
+  //     contentType: 'application/json',
+  //     // When a request completes, call `showRoute()` to display the
+  //     // route on the web page.
+  //     success: displayRoute,
+  //     error: function ajaxError(jqXHR, textStatus, errorThrown) {
+  //         console.error(
+  //             'Error generating random route: ',
+  //             textStatus,
+  //             ', Details: ',
+  //             errorThrown);
+  //         console.error('Response: ', jqXHR.responseText);
+  //         alert('An error occurred when creating a random route:\n' + jqXHR.responseText);
+  //     }
+  // })
 
 
-    // AWSAjax(
-    //   {
-    //     runId: runId,
-    //     generation: generation,
-    //     lengthStoreThreshold: lengthStoreThreshold,
-    //   },
-    //   "/routes",
-    //   displayRoute,
-    //   ["generating random route", "when creating a random route"]
-    // )
-    // // If the Ajax call succeeds, return the newly generated route.
-    // .done((newRoute) => { cb(null, newRoute); })
-    // // If the Ajax call fails, print a message and pass the error up through
-    // // the callback function `cb`.
-    // .fail((jqHXR, textStatus, err) => {
-    //   console.error("Problem with randomRoute AJAX call: " + textStatus);
-    //   cb(err);
-    // });
+    AWSAjax(
+      {
+        runId: runId,
+        generation: generation,
+        lengthStoreThreshold: lengthStoreThreshold,
+      },
+      "/routes",
+      displayRoute,
+      ["generating random route", "when creating a random route"]
+    )
+    // If the Ajax call succeeds, return the newly generated route.
+    .done((newRoute) => { cb(null, newRoute); })
+    // If the Ajax call fails, print a message and pass the error up through
+    // the callback function `cb`.
+    .fail((jqHXR, textStatus, err) => {
+      console.error("Problem with randomRoute AJAX call: " + textStatus);
+      cb(err);
+    });
   }
 
   ////////////////////////////////////////////////////////////

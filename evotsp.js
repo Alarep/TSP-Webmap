@@ -304,7 +304,7 @@
     const numToReturn = $('#num-parents').val();
     const gen = $('#generation-text-field').val();
 
-    const url = baseUrl + `/best?runId=${runId}&generation=${gen}&numToReturn=${numToReturn}`;
+    const url = baseUrl + `/best?runId=${runId}&generation=${generation}&numToReturn=${numToReturn}`;
 
     $('#best-route-list').text('');
 

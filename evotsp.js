@@ -312,7 +312,6 @@
       {
           method: 'GET',
           url: url,
-          contentType: 'application/json', // Declaring the type sent to the db
 
           success: (bestRoutes) => callback(null, bestRoutes),
 

@@ -387,27 +387,27 @@
   // function in the Ajax call.
   function fetchCityData(callback) {
     
-    $.ajax(
-      {
-          method: 'GET',
-          url: url + '/city-data',
-          contentType: 'application/json',
+  //   $.ajax(
+  //     {
+  //         method: 'GET',
+  //         url: url + '/city-data',
+  //         contentType: 'application/json',
 
-          // success: printRouteDetails,
-          success: callback,
+  //         // success: printRouteDetails,
+  //         success: callback,
 
-          error: function ajaxError(jqXHR, textStatus, errorThrown) {
-              console.error(
-                  'Error getting city data',
-                  textStatus,
-                  ', Details: ',
-                  errorThrown
-              );
-              console.error('Response: ', jqXHR.responseText);
-              alert('An error occurred when getting the city data: \n' + jqXHR.responseText);
-          }
-      }
-  )
+  //         error: function ajaxError(jqXHR, textStatus, errorThrown) {
+  //             console.error(
+  //                 'Error getting city data',
+  //                 textStatus,
+  //                 ', Details: ',
+  //                 errorThrown
+  //             );
+  //             console.error('Response: ', jqXHR.responseText);
+  //             alert('An error occurred when getting the city data: \n' + jqXHR.responseText);
+  //         }
+  //     }
+  // )
   }
 
   ////////////////////////////////////////////////////////////

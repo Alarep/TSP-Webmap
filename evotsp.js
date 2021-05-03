@@ -302,9 +302,9 @@
     
     const runId = $('#runId-text-field').val();
     const numToReturn = $('#num-parents').val();
-    const gen = $('#generation-text-field').val();
+    const gen = $('#current-generation').val();
 
-    const url = baseUrl + `/best?runId=${runId}&generation=${generation}&numToReturn=${numToReturn}`;
+    const url = baseUrl + `/best?runId=${runId}&generation=${gen}&numToReturn=${numToReturn}`;
 
     $('#best-route-list').text('');
 

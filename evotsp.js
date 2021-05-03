@@ -452,11 +452,11 @@
   // element in the HTML.
   function displayRoute(result) {
     
-    newRoutesList = $('#new-route-list');
+    // newRoutesList = $('#new-route-list');
 
-    newRoutesList.append(
-      '<ul>  </ul>'
-    )
+    // newRoutesList.append(
+    //   '<ul>  </ul>'
+    // )
   }
 
   // Display the best routes (length and IDs) in some way.
@@ -471,14 +471,14 @@
   // the waterfall in `runGeneration`.
   function displayBestRoutes(bestRoutes, dbp_cb) {
     
-    bestRoutesList = $('#best-route-list');
+    // bestRoutesList = $('#best-route-list');
 
-    // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
-    bestRoutesList.append(
-      '<ol> Route $(bestRoutes[0].route) was found containing the ID $(bestRotes[0].routeId) and length $(bestRoutes[0].len) </ol>'
-      );
+    // // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
+    // bestRoutesList.append(
+    //   '<ol> Route $(bestRoutes[0].route) was found containing the ID $(bestRotes[0].routeId) and length $(bestRoutes[0].len) </ol>'
+    //   );
 
-    dbp_cb(null, bestRoutes)
+    // dbp_cb(null, bestRoutes)
   }
 
   ////////////////////////////////////////////////////////////

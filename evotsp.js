@@ -381,9 +381,8 @@
   // `callback` as the `success` callback function in the Ajax call.
   function getRouteById(routeId, callback) {
     
-    // const routeId = $('#route-ID').val();
-
-        const url = baseUrl + '/routes/' + $('#route-ID').val();
+        const url = baseUrl + `/routes/${routeId}`;
+        console.log(url);
 
         $('#route-by-id-elements').text('');
 

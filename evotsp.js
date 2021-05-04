@@ -305,8 +305,6 @@
 
     const url = baseUrl + `/best?runId=${runId}&generation=${generation}&numToReturn=${numToReturn}`;
 
-    $('#best-route-list').text('');
-
     $.ajax(
       {
           method: 'GET',
@@ -358,7 +356,7 @@
 
       contentType: 'application/json',
 
-      success: children => cb(null, children),
+      success: (children) => cb(null, children),
       
       error: function ajaxError(jqXHR, textStatus, errorThrown) {
 
@@ -384,7 +382,7 @@
         const url = baseUrl + `/routes/${routeId}`;
         console.log(url);
 
-        $('#route-by-id-elements').text('');
+        // $('#route-by-id-elements').text('');
 
         $.ajax(
             {

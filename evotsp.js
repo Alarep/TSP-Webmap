@@ -130,7 +130,7 @@
       }),
       contentType: 'application/json',
 
-      success: displayRoute,
+      success: (randomRoute) => cb(null, randomRoute),
       error: function ajaxError(jqXHR, textStatus, errorThrown) {
           console.error(
               'Error generating random route: ', 
@@ -140,7 +140,7 @@
           console.error('Response: ', jqXHR.responseText);
           alert('An error occurred when creating a random route:\n' + jqXHR.responseText);
       }
-  }).done((randomRoute) =>  cb(null, randomRoute))
+  })
   }
 
   ////////////////////////////////////////////////////////////
@@ -302,7 +302,6 @@
     
     const runId = $('#runId-text-field').val();
     const numToReturn = $('#num-parents').val();
-    const gen = $('#current-generation').val();
 
     const url = baseUrl + `/best?runId=${runId}&generation=${generation}&numToReturn=${numToReturn}`;
 
@@ -347,7 +346,34 @@
   // as the `success` callback function in your Ajax call to make sure
   // the children pass down through the `runGeneration` waterfall.
   function makeChildren(parent, numChildren, generation, cb) {
-    // FILL THIS IN
+    
+    $.ajax({
+      method: 'POST',
+      url: baseUrl + '/mutateroute',
+      data: JSON.stringify({
+        routeId: parent.routeId,
+        generation: generation,
+        numChildren: numChildren
+      }),
+
+      contentType: 'application/json',
+
+      success: children => cb(null, children),
+      
+      error: function ajaxError(jqXHR, textStatus, errorThrown) {
+
+        console.error(
+            'Error when making the children: ',
+            textStatus,
+            ', Details: ',
+            errorThrown
+        );
+
+        console.error('Response: ', jqXHR.responseText);
+
+        alert('An error occurred when making the children \n' + jqXHR.responseText);
+    }
+    })
   }
 
   // Get the full details of the specified route. You should largely
@@ -368,7 +394,7 @@
                 contentType: 'application/json',
 
                 // success: printRouteDetails,
-                success: callback,
+                success: (route) => callback(null, route),
 
                 error: function ajaxError(jqXHR, textStatus, errorThrown) {
                     console.error(
@@ -388,15 +414,17 @@
   // that information. Make sure you pass `callback` as the `success` callback
   // function in the Ajax call.
   function fetchCityData(callback) {
+
+    //const url = baseUrl + '/city-data'
     
     $.ajax(
       {
           method: 'GET',
-          url: url + '/city-data',
+          url: baseUrl + '/city-data',
           contentType: 'application/json',
 
           // success: printRouteDetails,
-          success: callback,
+          success: (cityData) => callback(cityData),
 
           error: function ajaxError(jqXHR, textStatus, errorThrown) {
               console.error(
@@ -454,11 +482,11 @@
   // element in the HTML.
   function displayRoute(result) {
     
-    // newRoutesList = $('#new-route-list');
-
-    // newRoutesList.append(
-    //   '<ul>  </ul>'
-    // )
+    $('#new-route-list').text('');
+    console.log('New route received from API: ', result);
+    const routeId = result.routeId;
+    const length = result.length;
+    $('#new-route-list').append(`<li>We generated route ${routeId} with length ${length}.</li>`);
   }
 
   // Display the best routes (length and IDs) in some way.
@@ -473,12 +501,12 @@
   // the waterfall in `runGeneration`.
   function displayBestRoutes(bestRoutes, dbp_cb) {
     
-    bestRoutesList = $('#best-route-list');
+    // bestRoutesList = $('#best-route-list');
 
+    console.log('HERE HERE HERE HERE HERE HERE HERE ')
+    console.log(bestRoutes[0].route);
     // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
-    bestRoutesList.append(
-      '<ol> Route $(bestRoutes[0].route) was found containing the ID $(bestRotes[0].routeId) and length $(bestRoutes[0].len) </ol>'
-      );
+    $("#best-route-list").append(`<li> Route ${bestRoutes[0].route} was found containing the ID ${bestRoutes[0].routeId} and length ${bestRoutes[0].len} </li>`);
 
     dbp_cb(null, bestRoutes)
   }

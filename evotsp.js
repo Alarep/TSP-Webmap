@@ -350,7 +350,7 @@
       url: baseUrl + '/mutateroute',
       data: JSON.stringify({
         routeId: parent.routeId,
-        generation: generation,
+        lengthStoreThreshold: lengthStoreThreshold,
         numChildren: numChildren
       }),
 
@@ -382,8 +382,6 @@
         const url = baseUrl + `/routes/${routeId}`;
         console.log(url);
 
-        // $('#route-by-id-elements').text('');
-
         $.ajax(
             {
                 method: 'GET',
@@ -391,7 +389,7 @@
                 contentType: 'application/json',
 
                 // success: printRouteDetails,
-                success: (route) => callback(null, route),
+                success: (route) => callback(route),
 
                 error: function ajaxError(jqXHR, textStatus, errorThrown) {
                     console.error(
@@ -411,9 +409,7 @@
   // that information. Make sure you pass `callback` as the `success` callback
   // function in the Ajax call.
   function fetchCityData(callback) {
-
-    //const url = baseUrl + '/city-data'
-    
+   
     $.ajax(
       {
           method: 'GET',
@@ -501,6 +497,7 @@
     // bestRoutesList = $('#best-route-list');
 
     console.log('HERE HERE HERE HERE HERE HERE HERE ')
+    console.log(bestRoutes);
     console.log(bestRoutes[0].route);
     // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
     $("#best-route-list").append(`<li> Route ${bestRoutes[0].route} was found containing the ID ${bestRoutes[0].routeId} and length ${bestRoutes[0].len} </li>`);

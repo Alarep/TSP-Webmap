@@ -378,7 +378,6 @@
   // have this done from the previous exercise. Make sure you pass
   // `callback` as the `success` callback function in the Ajax call.
   function getRouteById(routeId, callback) {
-        console.log('THIS IS GET ROUTE BY ID, THIS IS GET ROUTE BY ID, THIS IS GET ROUTE BY ID, ');
         const url = baseUrl + '/routes/' + routeId;
 
         $.ajax(
@@ -471,6 +470,8 @@
   // We just appended this as an `<li>` to the `new-route-list`
   // element in the HTML.
   function displayRoute(result) {
+
+
     
     console.log('New route received from API: ', result);
     let routeId = result.routeId;
@@ -508,12 +509,10 @@
   // so far. They should all be complete and not need any changes.
 
   function updateBestRoute(children, ubr_cb) {
-    console.log('THIS IS UPDATE BEST ROUTE, THIS IS UPDATE BEST ROUTE, THIS IS UPDATE BEST ROUTE, ');
+
     children.forEach(child => {
       if (child.len < best.len) {
         updateBest(child.routeId);
-        console.log(child);
-        console.log(child.len);
       }
     });
     ubr_cb(null, children);
@@ -528,13 +527,11 @@
   // This is complete and you shouldn't have to modify it.
   function updateBest(routeId) {
     getRouteById(routeId, processNewRoute);
-    console.log('THIS IS UPDATE BEST, THIS IS UPDATE BEST, THIS IS UPDATE BEST, THIS IS UPDATE BEST, ');
+
 
 
     function processNewRoute(route) {
-      console.log('PROCESS NEW ROUTE, PROCESS NEW ROUTE, PROCESS NEW ROUTE, PROCESS NEW ROUTE, ');
-      console.log(route);
-      console.log(routeId)
+
       // We need to check that this route is _still_ the
       // best route. Thanks to asynchrony, we might have
       // updated `best` to an even better route between

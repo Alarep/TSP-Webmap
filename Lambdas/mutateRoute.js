@@ -9,13 +9,13 @@ const randomBytes = require('crypto').randomBytes;
  * 
  * For reference, here's a list of all the functions that
  * you need to complete:
- * - `getDistanceData()`
- * - `getRouteById()`
- * - `generateChildren()`
- * - `addOneToGen()`
- * - `recordChildren()`
- * - `returnChildren`
- * - `computeDistance`
+ * - `getDistanceData()`  - DONE
+ * - `getRouteById()`     - DONE
+ * - `generateChildren()` - DONE
+ * - `addOneToGen()`      - DONE
+ * - `recordChildren()`   - DONE
+ * - `returnChildren`     - 
+ * - `computeDistance`    - DONE
  */
 
 // This will be called in response to a POST request.
@@ -74,12 +74,20 @@ exports.handler = (event, context, callback) => {
 
 // Get the city-distance object for the region 'Minnesota'.
 function getDistanceData() {
-    // FILL THIS IN
+    return ddb.get({
+        TableName: 'distance_data',
+        Key: {region: 'Minnesota'}, //grabs the object from the first table
+    }).promise();
 }
 
 // Get the full info for the route with the given ID.
 function getRouteById(routeId) {
-    // FILL THIS IN
+    return ddb.get({
+        TableName: 'routes',
+        Key: {
+            "routeId": routeId
+            },
+    }).promise();
 }
 
 // Generate an array of new routes, each of which is a mutation
@@ -89,12 +97,14 @@ function getRouteById(routeId) {
 // most of the heavy lifting here, and this function should
 // be quite short.
 function generateChildren(distanceData, parentRoute, numChildren) {
-    // FILL THIS IN
-
-    // You could just use a for-loop for this, or see
-    // https://stackoverflow.com/a/42306160 for a nice description of
-    // how to use of Array()/fill/map to generate the desired number of
-    // children.
+    // return Array(numChildren).fill().map(generateChild(distanceData, parentRoute));
+    let mutts = [];
+    
+    for (let i = 0; i < numChildren; i++) {
+        mutts.push(generateChild(distanceData, parentRoute))
+    }
+    
+    return mutts;
 }
 
 // This is complete and you shouldn't need to change it. You
@@ -145,7 +155,20 @@ function genSwapPoints(numCities) {
 // one. If, for example, we are given 'XYZ#17', we
 // should return 'XYZ#18'.  
 function addOneToGen(oldRunGen) {
-    // FILL THIS IN
+    
+    
+    const stringLen = oldRunGen.length;
+    const sym = oldRunGen.indexOf("#");
+    
+    const runId = oldRunGen.substring(0, sym);
+    const genStr = oldRunGen.substring(sym + 1, stringLen);
+    
+    const genNum = Number(genStr);
+    const incrementGen = genNum + 1;
+    
+    const incKey = runId + '#' + incrementGen;
+    
+    return incKey;
 }
 
 // Write all the children whose length
@@ -155,20 +178,33 @@ function addOneToGen(oldRunGen) {
 // it (much) less likely that we'll have writes fail because we've
 // exceeded our default (free) provisioning.
 function recordChildren(children, lengthStoreThreshold) {
+    
     // Get just the children whose length is less than the threshold.
     const childrenToWrite
         = children.filter(child => child.len < lengthStoreThreshold);
-
-    // FILL IN THE REST OF THIS.
-    // You'll need to generate a batch request object (described
-    // in the write-up) and then call `ddb.batchWrite()` to write
-    // those children to the database.
-
-    // After the `ddb.batchWrite()` has completed, make sure you
-    // return the `childrenToWrite` array.
-    // We only want to return _those_ children (i.e., those good
-    // enough to be written to the DB) instead of returning all
-    // the generated children.
+    
+    var childJSON = {
+        RequestItems: {
+            'routes': []
+            
+        }
+    };
+    
+    // childrenToWrite.foreach instead. Better for JS whereas this for loop looks more like Java
+    for (let i = 0; i < childrenToWrite.length; i++){
+    
+        childJSON.RequestItems['routes'].push({
+            PutRequest: {
+                Item: childrenToWrite[i],
+            }
+        });
+    }
+    
+    ddb.batchWrite(childJSON, function(err, data) {
+        if (err) console.log(err);
+        else console.log(data);
+    });
+    return childrenToWrite;
 }
 
 // Take the children that were good (short) enough to be written
@@ -182,15 +218,57 @@ function recordChildren(children, lengthStoreThreshold) {
 //     the result of this Lambda call, with status code 201 and
 //     the 'Access-Control-Allow-Origin' line. 
 function returnChildren(callback, children) {
-    // FILL THIS IN
+    
+    let childrenSorted = children.sort(sortByProperty("len"));
+    
+    for (let i = 0; i < childrenSorted.length; i++){
+        delete childrenSorted[i].route;
+        delete childrenSorted[i].runGen;
+    }
+    
+    callback(null, {
+                statusCode: 201,
+                body: JSON.stringify(childrenSorted),
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });    
+}
+
+
+// Taken from https://medium.com/@asadise/sorting-a-json-array-according-one-property-in-javascript-18b1d22cd9e9
+// Method used to sort based on the provided property of the JSON obj
+function sortByProperty(property){  
+   return function(a,b){  
+      if(a[property] > b[property])  
+         return 1;  
+      else if(a[property] < b[property])  
+         return -1;  
+  
+      return 0;  
+   }  
 }
 
 // Compute the length of the given route.
 function computeDistance(distances, route) {
-    // FILL THIS IN
-
-    // REMEMBER TO INCLUDE THE COST OF GOING FROM THE LAST
-    // CITY BACK TO THE FIRST!
+    
+    let totalDistance = 0;
+    
+    for (let i = 0; i < route.length; i++){
+        if (i == route.length-1){
+            const finalCity = route[i];
+            const startCity = route[0];
+            const homeTripDistance = distances[finalCity][startCity];
+            totalDistance = totalDistance + homeTripDistance;
+        }
+        else {
+            const city1 = route[i];
+            const city2 = route[i+1];
+            const aDistance = distances[city1][city2];
+            totalDistance = totalDistance + aDistance;
+        }
+    }
+    return totalDistance;
 }
 
 function newId() {

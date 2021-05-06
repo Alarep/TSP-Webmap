@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Evo-TSP</title>
+    <title>The TSP: An Evolutionary Computation Approach</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Evolving solutions to a TSP instance" />
@@ -26,9 +26,9 @@
   </head>
 
   <body style="font-family: 'Cormorant Garamond', serif;">
-    <h1>Evo-TSP</h1>
+    <h1>The TSP: An Evolutionary Computation Approach</h1>
     <div>
-      <h2>"Global" parameters</h2>
+      <h2>Run Parameters</h2>
 
       <label for="runId-text-field">Run ID:</label>
       <input type="text" id="runId-text-field" />
@@ -42,7 +42,7 @@
 
     <div id="map" style="height: 500px; width: 500px"></div>
     <div id="best-run-routes">
-      <h2>Best so far</h2>
+      <h2>Best Results So Far:</h2>
       <ul>
         <li>Best <code>routeId</code>: <span id="best-routeId"></span></li>
         <li>Best length: <span id="best-length"></span></li>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="run-evolution">
-      <h2>Evolve solutions!</h2>
+      <h2>Evolve Solutions</h2>
 
       <label for="num-generations">How many generations to run?</label>
       <input type="text" id="num-generations" />
@@ -73,7 +73,7 @@
     </div>
 
     <div class="get-best-routes">
-      <h2>Best routes from previous generation</h2>
+      <h2>Best Routes From Previous Generation:</h2>
       <div id="best-routes">
         <ol id="best-route-list"></ol>
       </div>

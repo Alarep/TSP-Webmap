@@ -471,7 +471,7 @@
   // element in the HTML.
   function displayRoute(result) {
 
-
+    $('#new-route-list').text('');
     
     console.log('New route received from API: ', result);
     let routeId = result.routeId;

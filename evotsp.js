@@ -11,14 +11,6 @@
    *  - The functions that update the HTML over time
    *  - The functions that keep track of the best route
    *  - The functions that initialize the map and plot the best route
-   * 
-   * _Most_ of this is complete. You have to:
-   * 
-   *  - Fill in all the Ajax/HTTP calls
-   *  - Finish up some of the HTML update functions
-   * 
-   * We gave you all the evolution stuff and the mapping code, although what we gave
-   * you is pretty crude and you should feel free to fancy it up.
    */
 
   // Will be populated by `populateCityData`
@@ -42,14 +34,10 @@
   };
 
   ////////////////////////////////////////////////////////////
-  // BEGIN OF RUN EVOLUTION //////////////////////////////////
+  // BEGINNING OF RUN EVOLUTION //////////////////////////////////
   ////////////////////////////////////////////////////////////
 
-  // This runs the evolutionary process. This function and it's
-  // helper functions are all complete and you shouldn't have to
-  // change anything here. Some of these functions do call functions
-  // "outside" this, some of which you'll need to write. In particular
-  // you'll need to implement `randomRoute()` below in this section.
+  // This runs the evolutionary process.
   function runEvolution() {
     // Generate a new runId and set the current generation to 0
     const runId = generateUID(16);
@@ -153,9 +141,7 @@
 
   // This runs a single generation, getting the best routes from the
   // specified generation, and using them to make a population of
-  // new routes for the next generation via mutation. This is all
-  // complete and you shouldn't need to change anything here. It
-  // does, however, call things that you need to complete.
+  // new routes for the next generation via mutation.
   function runGeneration(generation, cb) {
     const popSize = parseInt($("#population-size-text-field").val());
     console.log(`Running generation ${generation}`);
@@ -279,17 +265,10 @@
   ////////////////////////////////////////////////////////////
 
   // These are the various functions that will make Ajax HTTP
-  // calls to your various Lambdas. Some of these are *very* similar
-  // to things you've already done in the previous project.
+  // calls to your various Lambdas.
 
   // This should get the best routes in the specified generation,
-  // which will be used (elsewhere) as parents. You should be able
-  // to use the (updated) Lambda from the previous exercise and call
-  // it in essentially the same way as you did before.
-  //
-  // You'll need to use the value of the `num-parents` field to
-  // indicate how many routes to return. You'll also need to use
-  // the `runId-text-field` field to get the `runId`.
+  // which will be used (elsewhere) as parents. 
   //
   // MAKE SURE YOU USE 
   //
@@ -333,9 +312,6 @@
   // parent that many times. Each child should have their generation
   // set to ONE MORE THAN THE GIVEN GENERATION. This is crucial, or
   // every route will end up in the same generation.
-  //
-  // This will use one of the new Lambdas that you wrote for the final
-  // project.
   //
   // MAKE SURE YOU USE
   //
@@ -434,19 +410,9 @@
   ////////////////////////////////////////////////////////////
 
   // The next few functions handle displaying different values
-  // in the HTML of the web app. This is all complete and you
-  // shouldn't have to do anything here, although you're welcome
-  // to modify parts of this if you want to change the way
-  // things look.
+  // in the HTML of the web app.
 
-  // A few of them are complete as is (`displayBestPath()` and
-  // `displayChildren()`), while others need to be written:
-  // 
-  // - `displayRoute()`
-  // - `displayBestRoutes()`
-
-  // Display the details of the best path. This is complete,
-  // but you can fancy it up if you wish.
+  // Display the details of the best path.
   function displayBestPath() {
     $("#best-length").text(best.len);
     $("#best-path").text(JSON.stringify(best.bestPath));
@@ -459,16 +425,13 @@
   }
 
   // Display all the children. This just uses a `forEach`
-  // to call `displayRoute` on each child route. This
-  // should be complete and work as is.
+  // to call `displayRoute` on each child route.
   function displayChildren(children, dc_cb) {
     children.forEach(child => displayRoute(child));
     dc_cb(null, children);
   }
 
-  // Display a new (child) route (ID and length) in some way.
-  // We just appended this as an `<li>` to the `new-route-list`
-  // element in the HTML.
+  // Display a new (child) route (ID and length)
   function displayRoute(result) {
 
     $('#new-route-list').text('');
@@ -476,12 +439,10 @@
     console.log('New route received from API: ', result);
     let routeId = result.routeId;
     let length = result.len;
-    $('#new-route-list').append(`<li>We generated <B>Route:</B> ${routeId} with <B>Length:</B> ${length}.</li>`);
+    $('#new-route-list').append(`<ul>We generated <B>Route:</B> ${routeId} with <B>Length:</B> ${length}.</ul>`);
   }
 
-  // Display the best routes (length and IDs) in some way.
-  // We just appended each route's info as an `<li>` to
-  // the `best-route-list` element in the HTML.
+  // Display the best routes (length and IDs)
   //
   // MAKE SURE YOU END THIS with
   //
@@ -492,7 +453,7 @@
   function displayBestRoutes(bestRoutes, dbp_cb) {
     
     // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
-    $("#best-route-list").append(`<li> <B>Route:</B> ${bestRoutes[0].route} was found containing the <B>ID:</B> ${bestRoutes[0].routeId} and <B>length:</B> ${bestRoutes[0].len} </li>`);
+    $("#best-route-list").append(`<ul> <B>Route:</B> ${bestRoutes[0].route} was found containing the <B>ID:</B> ${bestRoutes[0].routeId} and <B>length:</B> ${bestRoutes[0].len} </ul>`);
 
     dbp_cb(null, bestRoutes)
   }
@@ -506,7 +467,7 @@
   ////////////////////////////////////////////////////////////
 
   // The next few functions keep track of the best route we've seen
-  // so far. They should all be complete and not need any changes.
+  // so far.
 
   function updateBestRoute(children, ubr_cb) {
 
@@ -523,8 +484,6 @@
   // Lambda, and then plot it if it's still the best. (Because of
   // asynchrony it's possible that it's no longer the best by the
   // time we get the details back from the Lambda.)
-  //
-  // This is complete and you shouldn't have to modify it.
   function updateBest(routeId) {
     getRouteById(routeId, processNewRoute);
 
@@ -567,8 +526,6 @@
   ////////////////////////////////////////////////////////////
 
   // The next few functions handle the mapping of the best route.
-  // This is all complete and you shouldn't have to change anything
-  // here.
 
   // Uses the data in the `best` global variable to draw the current
   // best route on the Leaflet map.
@@ -626,7 +583,6 @@
     L.geoJSON(cityData, layerProcessing).addTo(mymap);
 
     function onEachFeature(feature, layer) {
-      // does this feature have a property named popupContent?
       if (feature.properties && feature.properties.popupContent) {
         layer.bindPopup(feature.properties.popupContent);
       }

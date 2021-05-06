@@ -453,7 +453,7 @@
   function displayBestRoutes(bestRoutes, dbp_cb) {
     
     // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
-    $("#best-route-list").append(`<ul> <B>Route:</B> ${bestRoutes[0].route} was found containing the <B>ID:</B> ${bestRoutes[0].routeId} and <B>length:</B> ${bestRoutes[0].len} </ul>`);
+    $("#best-route-list").append(`<ul> <B>Route:</B> ${bestRoutes[0].route} was found containing the <B>ID:</B> ${bestRoutes[0].routeId} and <B>Length:</B> ${bestRoutes[0].len} </ul>`);
 
     dbp_cb(null, bestRoutes)
   }

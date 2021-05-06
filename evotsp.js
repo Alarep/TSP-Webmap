@@ -476,7 +476,7 @@
     console.log('New route received from API: ', result);
     let routeId = result.routeId;
     let length = result.len;
-    $('#new-route-list').append(`<li>We generated route ${routeId} with length ${length}.</li>`);
+    $('#new-route-list').append(`<li>We generated <B>Route:</B> ${routeId} with <B>Length:</B> ${length}.</li>`);
   }
 
   // Display the best routes (length and IDs) in some way.
@@ -492,7 +492,7 @@
   function displayBestRoutes(bestRoutes, dbp_cb) {
     
     // May want to change to unordered list. The nature of the call may mess up the intent of ordering for readability.
-    $("#best-route-list").append(`<li> Route ${bestRoutes[0].route} was found containing the ID ${bestRoutes[0].routeId} and length ${bestRoutes[0].len} </li>`);
+    $("#best-route-list").append(`<li> <B>Route:</B> ${bestRoutes[0].route} was found containing the <B>ID:</B> ${bestRoutes[0].routeId} and <B>length:</B> ${bestRoutes[0].len} </li>`);
 
     dbp_cb(null, bestRoutes)
   }
